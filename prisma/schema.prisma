@@ -6,3 +6,208 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model crop {
+  crop_code            String               @id @db.VarChar(255)
+  category             String?              @db.VarChar(255)
+  crop_common_name     String?              @db.VarChar(255)
+  crop_image           String?              @db.LongText
+  crop_scientific_name String?              @db.VarChar(255)
+  season               String?              @db.VarChar(255)
+  crop_field_details   crop_field_details[]
+  log_crop_details     log_crop_details[]
+}
+
+model crop_field_details {
+  id         Int    @id @default(autoincrement())
+  crop_code  String @db.VarChar(255)
+  field_code String @db.VarChar(255)
+  field      field  @relation(fields: [field_code], references: [field_code], onDelete: NoAction, onUpdate: NoAction, map: "FKa141bua2qau4sjdkrtot2mnkq")
+  crop       crop   @relation(fields: [crop_code], references: [crop_code], onDelete: NoAction, onUpdate: NoAction, map: "FKo9j0wuiss8qq1ud0gnexdohtl")
+
+  @@index([field_code], map: "FKa141bua2qau4sjdkrtot2mnkq")
+  @@index([crop_code], map: "FKo9j0wuiss8qq1ud0gnexdohtl")
+}
+
+model equipment {
+  equipment_id            String                    @id @db.VarChar(255)
+  count                   String?                   @db.VarChar(255)
+  equipment_name          String?                   @db.VarChar(255)
+  status                  equipment_status?
+  type                    String?                   @db.VarChar(255)
+  equipment_field_details equipment_field_details[]
+  equipment_staff_details equipment_staff_details[]
+}
+
+model equipment_field_details {
+  id           Int       @id @default(autoincrement())
+  equipment_id String    @db.VarChar(255)
+  field_code   String    @db.VarChar(255)
+  field        field     @relation(fields: [field_code], references: [field_code], onDelete: NoAction, onUpdate: NoAction, map: "FK7k2svtonddjeiee0asp174d5o")
+  equipment    equipment @relation(fields: [equipment_id], references: [equipment_id], onDelete: NoAction, onUpdate: NoAction, map: "FK9dpk3wyxcdsvyky9t3owlchps")
+
+  @@index([field_code], map: "FK7k2svtonddjeiee0asp174d5o")
+  @@index([equipment_id], map: "FK9dpk3wyxcdsvyky9t3owlchps")
+}
+
+model equipment_staff_details {
+  id           Int       @id @default(autoincrement())
+  equipment_id String    @db.VarChar(255)
+  staff_id     String    @db.VarChar(255)
+  equipment    equipment @relation(fields: [equipment_id], references: [equipment_id], onDelete: NoAction, onUpdate: NoAction, map: "FKpvdad6woofoxe7wkrfkjxy9mr")
+  staff        staff     @relation(fields: [staff_id], references: [staff_id], onDelete: NoAction, onUpdate: NoAction, map: "FKsw29hovu8crhqto3857ln2wnx")
+
+  @@index([equipment_id], map: "FKpvdad6woofoxe7wkrfkjxy9mr")
+  @@index([staff_id], map: "FKsw29hovu8crhqto3857ln2wnx")
+}
+
+model field {
+  field_code              String                    @id @db.VarChar(255)
+  extent_size             String?                   @db.VarChar(255)
+  field_image_01          String?                   @db.LongText
+  field_image_02          String?                   @db.LongText
+  field_location          String?                   @db.VarChar(255)
+  field_name              String?                   @db.VarChar(255)
+  crop_field_details      crop_field_details[]
+  equipment_field_details equipment_field_details[]
+  field_staff_details     field_staff_details[]
+  log_fiedls_details      log_fiedls_details[]
+}
+
+model field_staff_details {
+  id         Int    @id @default(autoincrement())
+  field_code String @db.VarChar(255)
+  staff_id   String @db.VarChar(255)
+  field      field  @relation(fields: [field_code], references: [field_code], onDelete: NoAction, onUpdate: NoAction, map: "FK51q5nve8104tfeuthw3spkmmi")
+  staff      staff  @relation(fields: [staff_id], references: [staff_id], onDelete: NoAction, onUpdate: NoAction, map: "FKde9r4ao7h4ti19ilx2h15hn0t")
+
+  @@index([field_code], map: "FK51q5nve8104tfeuthw3spkmmi")
+  @@index([staff_id], map: "FKde9r4ao7h4ti19ilx2h15hn0t")
+}
+
+model log_crop_details {
+  id        Int    @id @default(autoincrement())
+  log_code  String @db.VarChar(255)
+  crop_code String @db.VarChar(255)
+  crop      crop   @relation(fields: [crop_code], references: [crop_code], onDelete: NoAction, onUpdate: NoAction, map: "FKbwo8gtanvaikeko6glb1mo6uj")
+  logs      logs   @relation(fields: [log_code], references: [log_code], onDelete: NoAction, onUpdate: NoAction, map: "FKijtothk3ps38xkabke2vgeinn")
+
+  @@index([crop_code], map: "FKbwo8gtanvaikeko6glb1mo6uj")
+  @@index([log_code], map: "FKijtothk3ps38xkabke2vgeinn")
+}
+
+model log_fiedls_details {
+  id         Int    @id @default(autoincrement())
+  log_code   String @db.VarChar(255)
+  field_code String @db.VarChar(255)
+  field      field  @relation(fields: [field_code], references: [field_code], onDelete: NoAction, onUpdate: NoAction, map: "FK84v2b7v3vlg5s6mh0gwf3lvb0")
+  logs       logs   @relation(fields: [log_code], references: [log_code], onDelete: NoAction, onUpdate: NoAction, map: "FKda6h3fl6oui6yg84nbi23r7r2")
+
+  @@index([field_code], map: "FK84v2b7v3vlg5s6mh0gwf3lvb0")
+  @@index([log_code], map: "FKda6h3fl6oui6yg84nbi23r7r2")
+}
+
+model log_staff_details {
+  id       Int    @id @default(autoincrement())
+  log_code String @db.VarChar(255)
+  staff_id String @db.VarChar(255)
+  logs     logs   @relation(fields: [log_code], references: [log_code], onDelete: NoAction, onUpdate: NoAction, map: "FKbg7b102w7pl3bl499ygojk16l")
+  staff    staff  @relation(fields: [staff_id], references: [staff_id], onDelete: NoAction, onUpdate: NoAction, map: "FKsodsifnihkwja6l0pcwovc86n")
+
+  @@index([log_code], map: "FKbg7b102w7pl3bl499ygojk16l")
+  @@index([staff_id], map: "FKsodsifnihkwja6l0pcwovc86n")
+}
+
+model logs {
+  log_code           String               @id @db.VarChar(255)
+  log_type           logs_log_type?
+  log_date           String?              @db.VarChar(255)
+  log_details        String?              @db.VarChar(255)
+  observe_image      String?              @db.LongText
+  log_crop_details   log_crop_details[]
+  log_fiedls_details log_fiedls_details[]
+  log_staff_details  log_staff_details[]
+}
+
+model staff {
+  staff_id                String                    @id @db.VarChar(255)
+  address_line_01         String?                   @db.VarChar(255)
+  address_line_02         String?                   @db.VarChar(255)
+  address_line_03         String?                   @db.VarChar(255)
+  address_line_04         String?                   @db.VarChar(255)
+  address_line_05         String?                   @db.VarChar(255)
+  contact_number          String?                   @db.VarChar(255)
+  designation             String?                   @db.VarChar(30)
+  dob                     DateTime?                 @db.Date
+  email                   String?                   @db.VarChar(255)
+  first_name              String?                   @db.VarChar(255)
+  gender                  staff_gender?
+  joined_date             DateTime?                 @db.Date
+  last_name               String?                   @db.VarChar(255)
+  role                    staff_role?
+  equipment_staff_details equipment_staff_details[]
+  field_staff_details     field_staff_details[]
+  log_staff_details       log_staff_details[]
+  vehicle                 vehicle[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model user {
+  user_id  String     @id @db.VarChar(255)
+  email    String?    @db.VarChar(255)
+  password String?    @db.VarChar(255)
+  role     user_role?
+}
+
+model vehicle {
+  vehicle_code         String             @id @db.VarChar(255)
+  fuel_type            vehicle_fuel_type?
+  licence_plate_number String?            @db.VarChar(255)
+  remarks              String?            @db.VarChar(255)
+  status               vehicle_status?
+  vehicle_category     String?            @db.VarChar(255)
+  staff_id             String?            @db.VarChar(255)
+  staff                staff?             @relation(fields: [staff_id], references: [staff_id], onDelete: NoAction, onUpdate: NoAction, map: "FKcncw3avfd7l4ie6en6du0ahdo")
+
+  @@index([staff_id], map: "FKcncw3avfd7l4ie6en6du0ahdo")
+}
+
+enum logs_log_type {
+  DANGER
+  NORMAL
+}
+
+enum vehicle_fuel_type {
+  DIESEL
+  PETROL
+}
+
+enum equipment_status {
+  AVAILABLE
+  NOT_AVAILABLE
+}
+
+enum user_role {
+  ADMINISTRATIVE
+  MANAGER
+  OTHER
+  SCIENTIST
+}
+
+enum vehicle_status {
+  AVAILABLE
+  OUT_OF_SERVICE
+}
+
+enum staff_gender {
+  FEMALE
+  MALE
+  OTHER
+}
+
+enum staff_role {
+  ADMINISTRATIVE
+  MANAGER
+  OTHER
+  SCIENTIST
+}
