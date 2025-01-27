@@ -7,7 +7,7 @@ class CropRoute{
         this.initialRoutes();
     }
     initialRoutes(){
-
+        this.router.use('/saveCrop')
     }
 }
 const CropRouter = new CropRoute();
