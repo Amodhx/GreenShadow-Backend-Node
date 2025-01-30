@@ -2,7 +2,7 @@ import {BaseDao} from "../base.dao";
 import LogModel from "../../model/log.model";
 
 class LogDao implements BaseDao<LogModel>{
-    create(name: string, list: LogModel[]) {
+    create(dataObj: LogModel) {
     }
 
     delete(id: number) {
@@ -11,7 +11,7 @@ class LogDao implements BaseDao<LogModel>{
     findAll() {
     }
 
-    update(id: number, name: string, list: LogModel[]) {
+    update(dataObj: LogModel) {
     }
 
 }

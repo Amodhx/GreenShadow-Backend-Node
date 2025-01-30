@@ -1,6 +1,6 @@
 export interface BaseDao<T>{
-    create(name:string,list:T[]);
-    update(id:number,name:string,list:T[]);
+    create(dataObj:T);
+    update(dataObj:T);
     delete(id:number)
     findAll();
 }

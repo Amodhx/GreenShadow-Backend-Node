@@ -1,8 +1,11 @@
 import {BaseDao} from "../base.dao";
 import CropModel from "../../model/crop.model";
+import prisma from "../../../prisma/client";
+
 
 class CropDao implements BaseDao<CropModel>{
-    create(name: string, list: CropModel[]) {
+    create(dataObj: CropModel) {
+
     }
 
     delete(id: number) {
@@ -11,7 +14,7 @@ class CropDao implements BaseDao<CropModel>{
     findAll() {
     }
 
-    update(id: number, name: string, list: CropModel[]) {
+    update(dataObj: CropModel) {
     }
 
 

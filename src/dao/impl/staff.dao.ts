@@ -2,7 +2,7 @@ import StaffModel from "../../model/staff.model";
 import {BaseDao} from "../base.dao";
 
 class StaffDao implements BaseDao<StaffModel>{
-    create(name: string, list: StaffModel[]) {
+    create(dataObj: StaffModel) {
     }
 
     delete(id: number) {
@@ -11,7 +11,7 @@ class StaffDao implements BaseDao<StaffModel>{
     findAll() {
     }
 
-    update(id: number, name: string, list: StaffModel[]) {
+    update(dataObj: StaffModel) {
     }
 
 }

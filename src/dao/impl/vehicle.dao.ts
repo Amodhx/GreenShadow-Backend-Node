@@ -2,7 +2,7 @@ import {BaseDao} from "../base.dao";
 import VehicleModel from "../../model/vehicle.model";
 
 class VehicleDao implements BaseDao<VehicleModel>{
-    create(name: string, list: VehicleModel[]) {
+    create(dataObj: VehicleModel) {
     }
 
     delete(id: number) {
@@ -11,7 +11,7 @@ class VehicleDao implements BaseDao<VehicleModel>{
     findAll() {
     }
 
-    update(id: number, name: string, list: VehicleModel[]) {
+    update(dataObj: VehicleModel) {
     }
 
 }
