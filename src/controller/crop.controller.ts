@@ -1,7 +1,9 @@
+import Crop_service from "../service/crop.service";
+
 class CropController{
 
     async saveCrop(req,resp){
-
+        resp.status(201).send(await Crop_service.saveCrop(req.body));
     }
     async getAllCrops(req,resp){
 
