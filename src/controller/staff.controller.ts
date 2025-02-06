@@ -1,14 +1,16 @@
+import {Request, Response} from "express";
+
 class StaffController{
-    async saveStaff(req,resp){
+    async saveStaff(req:Request,resp:Response){
 
     }
-    async deleteStaff(req,resp){
+    async deleteStaff(req:Request,resp:Response){
 
     }
-    async updateStaff(req,resp){
+    async updateStaff(req:Request,resp:Response){
 
     }
-    async getAllStaff(req,resp){
+    async getAllStaff(req:Request,resp:Response){
 
     }
 

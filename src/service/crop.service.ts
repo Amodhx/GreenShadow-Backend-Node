@@ -4,7 +4,11 @@ import cropDao from "../dao/impl/crop.dao";
 class CropService{
 
     async saveCrop(cropObj:CropModel){
-        return await cropDao.create(cropObj);
+        try {
+            return await cropDao.create(cropObj);
+        }catch (err){
+            throw err;
+        }
     }
     async deleteCrop(crop_id:string){
 

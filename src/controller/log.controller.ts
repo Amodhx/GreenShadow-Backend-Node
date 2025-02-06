@@ -1,14 +1,16 @@
+import {Request, Response} from "express";
+
 class LogController{
-    async saveLog(req,resp){
+    async saveLog(req:Request,resp:Response){
 
     }
-    async updateLog(req,resp){
+    async updateLog(req:Request,resp:Response){
 
     }
-    async deleteLog(req,resp){
+    async deleteLog(req:Request,resp:Response){
 
     }
-    async getAllLogs(req,resp){
+    async getAllLogs(req:Request,resp:Response){
 
     }
 }

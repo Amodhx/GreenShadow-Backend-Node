@@ -1,14 +1,16 @@
+import {Request, Response} from "express";
+
 class VehicleController{
-    async saveVehicle(req,resp){
+    async saveVehicle(req:Request,resp:Response){
 
     }
-    async updateVehicle(req,resp){
+    async updateVehicle(req:Request,resp:Response){
 
     }
-    async getAllVehicles(req,resp){
+    async getAllVehicles(req:Request,resp:Response){
 
     }
-    async deleteVehicle(req,resp){
+    async deleteVehicle(req:Request,resp:Response){
 
     }
 }

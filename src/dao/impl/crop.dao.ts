@@ -27,7 +27,6 @@ class CropDao implements BaseDao<CropModel>{
             console.log("Crop saved successfully:", newCrop);
             return newCrop;
         } catch (error) {
-            console.error("Error saving crop:", error);
             throw error;
         }
     }

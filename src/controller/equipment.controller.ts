@@ -1,14 +1,16 @@
+import {Request, Response} from "express";
+
 class EquipmentController{
-    async saveEquipment(req,resp){
+    async saveEquipment(req:Request,resp:Response){
 
     }
-    async deleteEquipment(req,resp){
+    async deleteEquipment(req:Request,resp:Response){
 
     }
-    async updateEquipment(req,resp){
+    async updateEquipment(req:Request,resp:Response){
 
     }
-    async getAllEquipments(req,resp){
+    async getAllEquipments(req:Request,resp:Response){
 
     }
 }
