@@ -5,6 +5,7 @@ class CropService{
 
     async saveCrop(cropObj:CropModel){
         try {
+            console.log(cropObj)
             return await cropDao.create(cropObj);
         }catch (err){
             throw err;
