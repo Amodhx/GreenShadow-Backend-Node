@@ -1,6 +1,7 @@
 import {BaseDao} from "../base.dao";
-import EquipmentModel, {EquipmentStatus} from "../../model/equipment.model";
+import EquipmentModel from "../../model/equipment.model";
 import prisma from "../../../prisma/client";
+import {equipment_status} from "@prisma/client";
 
 class EquipmentDao implements BaseDao<EquipmentModel>{
     async create(dataObj: EquipmentModel) {
@@ -11,7 +12,7 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
                     equipment_name : dataObj.equipment_name,
                     count : dataObj.count,
                     type : dataObj.type,
-                    status : dataObj.status as keyof typeof EquipmentStatus,
+                    status :dataObj.status as unknown as equipment_status,
                     equipment_field_details : {
                         create : dataObj.field_code_list.map((field)=>({
                             field_code : field
@@ -62,33 +63,33 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
 
     async update(dataObj: EquipmentModel) {
         try {
-            const savedEquipment = await prisma.equipment.update({
-                where : {
-                    equipment_id : dataObj.equipment_id
+            return await prisma.equipment.update({
+                where: {
+                    equipment_id: dataObj.equipment_id
                 },
-                data : {
-                    equipment_name : dataObj.equipment_name,
-                    count : dataObj.count,
-                    type : dataObj.type,
-                    status : dataObj.status as keyof typeof EquipmentStatus,
-                    equipment_field_details : {
-                        deleteMany : {},
-                        create : dataObj.field_code_list.map((field)=>({
-                            field_code : field
+                data: {
+                    equipment_name: dataObj.equipment_name,
+                    count: dataObj.count,
+                    type: dataObj.type,
+                    status: dataObj.status as unknown as equipment_status,
+                    equipment_field_details: {
+                        deleteMany: {},
+                        create: dataObj.field_code_list.map((field) => ({
+                            field_code: field
                         }))
                     },
-                    equipment_staff_details : {
-                        deleteMany : {},
-                        create : dataObj.staff_id_list.map((staff)=>({
-                            staff_id : staff
+                    equipment_staff_details: {
+                        deleteMany: {},
+                        create: dataObj.staff_id_list.map((staff) => ({
+                            staff_id: staff
                         }))
                     }
                 },
-                include : {
-                    equipment_field_details : true,
-                    equipment_staff_details : true
+                include: {
+                    equipment_field_details: true,
+                    equipment_staff_details: true
                 }
-            })
+            });
         }catch (err){
             throw err;
         }
@@ -114,7 +115,7 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
             return `EQUIPMENT-${nextIdNumber}`;
 
         }catch (err){
-
+            throw err;
         }
     }
 
