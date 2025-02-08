@@ -31,14 +31,86 @@ class CropDao implements BaseDao<CropModel>{
         }
     }
 
-    delete(id: number) {
+    async delete(id: string) {
+        try {
+            const deletedCrop = await prisma.crop.delete({
+                where: {
+                    crop_code: id,
+                },
+            });
+            console.log("Deleted Crop:", deletedCrop);
+            return deletedCrop;
+        } catch (error) {
+            throw error;
+        }
     }
 
-    findAll() {
+    async findAll() {
+        try {
+            return await prisma.crop.findMany();
+        } catch (error) {
+            throw error;
+        }
+    }
+    async update(dataObj: CropModel) {
+        try {
+            const updatedCrop = await prisma.crop.update({
+                where: {
+                    crop_code: dataObj.crop_id,
+                },
+                data: {
+                    category: dataObj.category,
+                    crop_common_name: dataObj.crop_common_name,
+                    crop_image: dataObj.crop_image,
+                    crop_scientific_name: dataObj.crop_scientific_name,
+                    season: dataObj.season,
+                    crop_field_details: {
+                        // Update existing crop field details or create new ones
+                        deleteMany: {},  // Optional: Deletes existing crop field details, if needed
+                        create: dataObj.field_code_list.map((field) => ({
+                            field_code: field,
+                        })),
+                    },
+                },
+                include: {
+                    crop_field_details: true,
+                },
+            });
+            console.log("Crop updated successfully:", updatedCrop);
+            return updatedCrop;
+        } catch (error) {
+            throw error;
+        }
     }
 
-    update(dataObj: CropModel) {
+    async generateNextCropId() {
+        try {
+            const crops = await prisma.crop.findMany({
+                select: {
+                    crop_code: true,
+                },
+            });
+
+            const sortedCrops = crops
+                .map((crop) => {
+                    const numberPart = parseInt(crop.crop_code.split('-')[1]);
+                    return { crop_code: crop.crop_code, numberPart };
+                })
+                .sort((a, b) => b.numberPart - a.numberPart);  // Sort in descending order based on numberPart
+
+            if (sortedCrops.length === 0) {
+                return 'CROP-1';
+            }
+
+            // Get the last crop's number and increment it
+            const lastIdNumber = sortedCrops[0].numberPart;
+            const nextIdNumber = lastIdNumber + 1;
+            return `CROP-${nextIdNumber}`;
+        } catch (error) {
+            throw error;
+        }
     }
+
 
 
 }

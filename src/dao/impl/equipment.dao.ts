@@ -5,7 +5,7 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
     create(dataObj: EquipmentModel) {
     }
 
-    delete(id: number) {
+    delete(id: string) {
     }
 
     findAll() {

@@ -14,7 +14,7 @@ class CropRoute{
     initialRoutes(){
         this.router.post('/saveCrop', upload.single("crop_image"), Crop_controller.saveCrop);
         this.router.get('/getAllCrops',Crop_controller.getAllCrops)
-        this.router.patch('/updateCrop',Crop_controller.updateCrop)
+        this.router.patch('/updateCrop',upload.single("crop_image"),Crop_controller.updateCrop)
         this.router.delete('/deleteCrop',Crop_controller.deleteCrop)
     }
 }

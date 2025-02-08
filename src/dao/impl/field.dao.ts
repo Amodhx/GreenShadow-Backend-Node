@@ -5,7 +5,7 @@ class FieldDao implements BaseDao<FieldModel>{
     create(dataObj: FieldModel) {
     }
 
-    delete(id: number) {
+    delete(id: string) {
     }
 
     findAll() {

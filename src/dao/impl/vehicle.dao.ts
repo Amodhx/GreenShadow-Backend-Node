@@ -5,7 +5,7 @@ class VehicleDao implements BaseDao<VehicleModel>{
     create(dataObj: VehicleModel) {
     }
 
-    delete(id: number) {
+    delete(id: string) {
     }
 
     findAll() {

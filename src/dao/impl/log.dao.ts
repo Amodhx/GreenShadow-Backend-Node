@@ -5,7 +5,7 @@ class LogDao implements BaseDao<LogModel>{
     create(dataObj: LogModel) {
     }
 
-    delete(id: number) {
+    delete(id: string) {
     }
 
     findAll() {

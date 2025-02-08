@@ -5,7 +5,7 @@ class StaffDao implements BaseDao<StaffModel>{
     create(dataObj: StaffModel) {
     }
 
-    delete(id: number) {
+    delete(id: string) {
     }
 
     findAll() {
