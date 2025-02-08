@@ -20,6 +20,6 @@ class EquipmentModel{
 }
 export default EquipmentModel;
 
-enum EquipmentStatus{
+export enum EquipmentStatus{
     AVAILABLE,NOT_AVAILABLE
 }

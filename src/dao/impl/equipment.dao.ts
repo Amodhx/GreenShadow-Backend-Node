@@ -1,17 +1,97 @@
 import {BaseDao} from "../base.dao";
-import EquipmentModel from "../../model/equipment.model";
+import EquipmentModel, {EquipmentStatus} from "../../model/equipment.model";
+import prisma from "../../../prisma/client";
 
 class EquipmentDao implements BaseDao<EquipmentModel>{
-    create(dataObj: EquipmentModel) {
+    async create(dataObj: EquipmentModel) {
+        try {
+            const savedEquipment = await prisma.equipment.create({
+                data : {
+                    equipment_id : dataObj.equipment_id,
+                    equipment_name : dataObj.equipment_name,
+                    count : dataObj.count,
+                    type : dataObj.type,
+                    status : dataObj.status as keyof typeof EquipmentStatus,
+                    equipment_field_details : {
+                        create : dataObj.field_code_list.map((field)=>({
+                            field_code : field
+                        }))
+                    },
+                    equipment_staff_details : {
+                        create : dataObj.staff_id_list.map((staff)=>({
+                            staff_id : staff
+                        }))
+                    }
+                },
+                include : {
+                    equipment_field_details : true,
+                    equipment_staff_details : true
+                }
+            })
+
+            console.log("Saved Equipment Value:  "+savedEquipment)
+            return savedEquipment;
+        }catch (err){
+            throw err;
+        }
     }
 
-    delete(id: string) {
+    async delete(id: string) {
+        try{
+            const deletedEquipment = await prisma.equipment.delete(
+                {
+                    where : {
+                        equipment_id : id
+                    }
+                }
+            )
+            console.log("DELETED EQUIPMENT : "+ deletedEquipment)
+            return deletedEquipment;
+        }catch (err){
+            throw err;
+        }
     }
 
-    findAll() {
+    async findAll() {
+        try {
+            return await prisma.equipment.findMany();
+        }catch (err){
+            throw err;
+        }
     }
 
-    update(dataObj: EquipmentModel) {
+    async update(dataObj: EquipmentModel) {
+        try {
+            const savedEquipment = await prisma.equipment.update({
+                where : {
+                    equipment_id : dataObj.equipment_id
+                },
+                data : {
+                    equipment_name : dataObj.equipment_name,
+                    count : dataObj.count,
+                    type : dataObj.type,
+                    status : dataObj.status as keyof typeof EquipmentStatus,
+                    equipment_field_details : {
+                        deleteMany : {},
+                        create : dataObj.field_code_list.map((field)=>({
+                            field_code : field
+                        }))
+                    },
+                    equipment_staff_details : {
+                        deleteMany : {},
+                        create : dataObj.staff_id_list.map((staff)=>({
+                            staff_id : staff
+                        }))
+                    }
+                },
+                include : {
+                    equipment_field_details : true,
+                    equipment_staff_details : true
+                }
+            })
+        }catch (err){
+            throw err;
+        }
     }
 
 }
