@@ -93,5 +93,31 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
             throw err;
         }
     }
+    async generateNextEquipmentId(){
+        try {
+            const equipments = await prisma.equipment.findMany({
+                select : {
+                    equipment_id : true
+                }
+            });
+            const sortedEquipments = equipments
+                .map((equipment) =>{
+                    const numberPart = parseInt(equipment.equipment_id.split('-')[1]);
+                    return { equipment_id: equipment.equipment_id, numberPart };
+                })
+                .sort((a,b) => b.numberPart - a.numberPart);
+            if (sortedEquipments.length === 0){
+                return "EQUIPMENT-1"
+            }
+            const lastIdNumber = sortedEquipments[0].numberPart;
+            const nextIdNumber = lastIdNumber + 1;
+            return `EQUIPMENT-${nextIdNumber}`;
+
+        }catch (err){
+
+        }
+    }
 
 }
+const equipmentDao = new EquipmentDao();
+export default equipmentDao;

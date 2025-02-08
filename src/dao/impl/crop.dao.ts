@@ -96,13 +96,11 @@ class CropDao implements BaseDao<CropModel>{
                     const numberPart = parseInt(crop.crop_code.split('-')[1]);
                     return { crop_code: crop.crop_code, numberPart };
                 })
-                .sort((a, b) => b.numberPart - a.numberPart);  // Sort in descending order based on numberPart
+                .sort((a, b) => b.numberPart - a.numberPart);
 
             if (sortedCrops.length === 0) {
                 return 'CROP-1';
             }
-
-            // Get the last crop's number and increment it
             const lastIdNumber = sortedCrops[0].numberPart;
             const nextIdNumber = lastIdNumber + 1;
             return `CROP-${nextIdNumber}`;
