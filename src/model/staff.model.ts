@@ -42,13 +42,13 @@ class StaffModel{
         this.vehicles_list = vehicles_list;
     }
 }
-enum Designation {
+export enum Designation {
     MANAGER,SENIOR_ASSISTANT_MANAGER,ASSISTANT_MANAGER,ADMIN_HR_STAFF,OFFICE_ASSISTANT,SENIOR_AGRONOMIST,AGRONOMIST,SOIL_SCIENTIST,SENIOR_TECHNICIAN,TECHNICIAN,SUPERVISOR,LABOR
 }
-enum Gender {
+export enum Gender {
     MALE,FEMALE,OTHER
 }
-enum Role{
+export enum Role{
     MANAGER,ADMINISTRATIVE,SCIENTIST,OTHER
 }
 export default StaffModel

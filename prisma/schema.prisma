@@ -136,12 +136,12 @@ model staff {
   address_line_04         String?                   @db.VarChar(255)
   address_line_05         String?                   @db.VarChar(255)
   contact_number          String?                   @db.VarChar(255)
-  designation             String?                   @db.VarChar(30)
-  dob                     DateTime?                 @db.Date
+  designation             staff_designation?
+  dob                     String?                   @db.VarChar(30)
   email                   String?                   @db.VarChar(255)
   first_name              String?                   @db.VarChar(255)
   gender                  staff_gender?
-  joined_date             DateTime?                 @db.Date
+  joined_date             String                    @db.VarChar(30)
   last_name               String?                   @db.VarChar(255)
   role                    staff_role?
   equipment_staff_details equipment_staff_details[]
@@ -179,6 +179,21 @@ enum logs_log_type {
 enum vehicle_fuel_type {
   DIESEL
   PETROL
+}
+
+enum staff_designation {
+  MANAGER
+  SENIOR_ASSISTANT_MANAGER
+  ASSISTANT_MANAGER
+  ADMIN_HR_STAFF
+  OFFICE_ASSISTANT
+  SENIOR_AGRONOMIST
+  AGRONOMIST
+  SOIL_SCIENTIST
+  SENIOR_TECHNICIAN
+  TECHNICIAN
+  SUPERVISOR
+  LABOR
 }
 
 enum equipment_status {

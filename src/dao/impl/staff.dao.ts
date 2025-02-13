@@ -1,17 +1,123 @@
-import StaffModel from "../../model/staff.model";
+import StaffModel, {Designation} from "../../model/staff.model";
 import {BaseDao} from "../base.dao";
+import prisma from "../../../prisma/client";
+import {staff_designation, staff_gender, staff_role} from "@prisma/client";
 
 class StaffDao implements BaseDao<StaffModel>{
-    create(dataObj: StaffModel) {
+    async create(dataObj: StaffModel) {
+        try {
+           const  savedStaff = await prisma.staff.create({
+               data : {
+                   staff_id : dataObj.staff_id,
+                   first_name : dataObj.first_name,
+                   last_name : dataObj.last_name,
+                   dob : dataObj.dob,
+                   joined_date : dataObj.joined_date,
+                   designation : dataObj.designation as unknown as staff_designation,
+                   gender : dataObj.gender as unknown as staff_gender,
+                   address_line_01 : dataObj.address_line_01,
+                   address_line_02 : dataObj.address_line_02,
+                   address_line_03 : dataObj.address_line_03,
+                   address_line_04 : dataObj.address_line_04,
+                   address_line_05 : dataObj.address_line_05,
+                   contact_number : dataObj.contact_number,
+                   email : dataObj.email,
+                   role : dataObj.role as unknown as staff_role,
+                   equipment_staff_details : {
+                       create : dataObj.equipments_list.map((equipment) =>({
+                           equipment : {connect : {equipment_id : equipment}}
+                       }))
+                   },
+                   field_staff_details : {
+                       create : dataObj.fields_list.map((field) =>({
+                           field : {connect : {field_code : field}}
+                       }))
+                   }
+               },
+               include : {
+                   equipment_staff_details : true,
+                   field_staff_details : true
+               }
+           })
+            console.log("Saved Staff : " +savedStaff);
+            return savedStaff;
+        }catch (err){
+            throw err
+        }
     }
 
-    delete(id: string) {
+    async delete(id: string) {
+        try {
+            return await prisma.staff.delete({
+                where : {
+                    staff_id : id
+                }
+            })
+        }catch (err){
+            throw  err;
+        }
     }
 
-    findAll() {
+    async findAll() {
+        try {
+            return await prisma.staff.findMany({
+                include : {
+                    equipment_staff_details : true,
+                    field_staff_details : true
+                }
+            })
+        }catch (err){
+            throw err;
+        }
     }
 
-    update(dataObj: StaffModel) {
+    async update(dataObj: StaffModel) {
+        try {
+            const  updatedStaff = await prisma.staff.update({
+                where : {
+                    staff_id : dataObj.staff_id
+                },
+                data : {
+                    first_name : dataObj.first_name,
+                    last_name : dataObj.last_name,
+                    dob : dataObj.dob,
+                    joined_date : dataObj.joined_date,
+                    designation : dataObj.designation as unknown as staff_designation,
+                    gender : dataObj.gender as unknown as staff_gender,
+                    address_line_01 : dataObj.address_line_01,
+                    address_line_02 : dataObj.address_line_02,
+                    address_line_03 : dataObj.address_line_03,
+                    address_line_04 : dataObj.address_line_04,
+                    address_line_05 : dataObj.address_line_05,
+                    contact_number : dataObj.contact_number,
+                    email : dataObj.email,
+                    role : dataObj.role as unknown as staff_role,
+                    equipment_staff_details : {
+                        deleteMany : {},
+                        create : dataObj.equipments_list.map((equipment) =>({
+                            equipment : {connect : {equipment_id : equipment}}
+                        }))
+                    },
+                    field_staff_details : {
+                        deleteMany : {},
+                        create : dataObj.fields_list.map((field) =>({
+                            field : {connect : {field_code : field}}
+                        }))
+                    }
+                },
+                include : {
+                    equipment_staff_details : true,
+                    field_staff_details : true
+                }
+            })
+            console.log("Updated Staff : " +updatedStaff);
+            return updatedStaff;
+        }catch (err){
+            throw err
+        }
     }
 
 }
+
+const Staff_dao = new StaffDao();
+export default Staff_dao;
