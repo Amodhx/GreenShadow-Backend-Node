@@ -35,11 +35,31 @@ class FieldDao implements BaseDao<FieldModel>{
         }
     }
 
-    delete(id: string) {
-
+    async delete(id: string) {
+        try {
+            return await prisma.field.delete({
+                where: {
+                    field_code: id
+                }
+            });
+        }catch (err){
+            throw err;
+        }
     }
 
-    findAll() {
+    async findAll() {
+        try {
+            return await prisma.field.findMany({
+                include : {
+                    crop_field_details : true,
+                    equipment_field_details : true,
+                    field_staff_details : true,
+                    log_fiedls_details : true
+                }
+            });
+        }catch (err){
+            throw err;
+        }
     }
 
     async update(dataObj: FieldModel) {

@@ -55,7 +55,12 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
 
     async findAll() {
         try {
-            return await prisma.equipment.findMany();
+            return await prisma.equipment.findMany({
+                include : {
+                    equipment_field_details : true,
+                    equipment_staff_details : true
+                }
+            });
         }catch (err){
             throw err;
         }

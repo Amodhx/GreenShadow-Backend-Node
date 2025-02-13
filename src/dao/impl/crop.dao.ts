@@ -48,7 +48,12 @@ class CropDao implements BaseDao<CropModel>{
 
     async findAll() {
         try {
-            return await prisma.crop.findMany();
+            return await prisma.crop.findMany({
+                include : {
+                    crop_field_details : true,
+                    log_crop_details : true
+                }
+            });
         } catch (error) {
             throw error;
         }
