@@ -21,14 +21,14 @@ class StaffController{
     }
     async updateStaff(req:Request,resp:Response){
         try {
-
+            resp.status(201).send(await staffService.updateStaff(req.body))
         }catch (err){
             resp.status(500).send(err);
         }
     }
     async getAllStaff(req:Request,resp:Response){
         try {
-            resp.status(201).send(await staffService.updateStaff(req.body))
+            resp.status(201).send(await staffService.getAllStaffs())
         }catch (err){
             resp.status(500).send(err);
         }
