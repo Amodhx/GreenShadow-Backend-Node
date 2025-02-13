@@ -19,10 +19,18 @@ class FieldService{
         }
     }
     async deleteField(field_id:string){
-
+        try {
+            return await fieldDao.delete(field_id);
+        }catch (err){
+            throw err
+        }
     }
     async getAllFields(){
-
+        try {
+            return await fieldDao.findAll();
+        }catch (err){
+            throw err
+        }
     }
 
 }
