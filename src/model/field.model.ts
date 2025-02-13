@@ -5,11 +5,11 @@ class FieldModel{
      extent_size:string
      staff_list:string[]
      crop_list:string[]
-     field_image:string
+     field_image:string | undefined
      logs_list:string[]
      equipments_list:string[]
 
-    constructor(field_code: string, field_name: string, field_location: string, extent_size: string, staff_list: string[], crop_list: string[], field_image: string, logs_list: string[], equipments_list: string[]) {
+    constructor(field_code: string, field_name: string, field_location: string, extent_size: string, staff_list: string[], crop_list: string[], field_image: string|undefined, logs_list: string[], equipments_list: string[]) {
         this.field_id = field_code;
         this.field_name = field_name;
         this.field_location = field_location;

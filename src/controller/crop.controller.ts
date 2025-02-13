@@ -50,6 +50,7 @@ class CropController{
                 resp.status(201).send(await cropService.deleteCrop(id))
             }
         }catch (err){
+            console.log(err)
             resp.status(500).send(err);
         }
     }

@@ -1,7 +1,6 @@
 import {Router} from "express";
 import Crop_controller from "../controller/crop.controller";
 import multer from "multer";
-import CropController from "../controller/crop.controller";
 
 const storage = multer.memoryStorage(); // Store files in memory (you can change it to disk storage)
 const upload = multer({ storage });

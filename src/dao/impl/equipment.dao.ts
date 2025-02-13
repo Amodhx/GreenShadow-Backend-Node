@@ -15,12 +15,12 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
                     status :dataObj.status as unknown as equipment_status,
                     equipment_field_details : {
                         create : dataObj.field_code_list.map((field)=>({
-                            field_code : field
+                            field : {connect : {field_code : field}}
                         }))
                     },
                     equipment_staff_details : {
                         create : dataObj.staff_id_list.map((staff)=>({
-                            staff_id : staff
+                            staff : {connect : {staff_id : staff}}
                         }))
                     }
                 },
@@ -75,13 +75,13 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
                     equipment_field_details: {
                         deleteMany: {},
                         create: dataObj.field_code_list.map((field) => ({
-                            field_code: field
+                            field : {connect : {field_code : field}}
                         }))
                     },
                     equipment_staff_details: {
                         deleteMany: {},
                         create: dataObj.staff_id_list.map((staff) => ({
-                            staff_id: staff
+                            staff : {connect : {staff_id : staff}}
                         }))
                     }
                 },

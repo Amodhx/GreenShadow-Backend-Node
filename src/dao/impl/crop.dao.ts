@@ -16,10 +16,11 @@ class CropDao implements BaseDao<CropModel>{
                     season: dataObj.season,
                     crop_field_details: {
                         create: dataObj.field_code_list.map((field) => ({
-                            field_code: field,
+                            field: { connect: { field_code: field } },
                         })),
                     },
                 },
+
                 include: {
                     crop_field_details: true,
                 },
@@ -65,10 +66,9 @@ class CropDao implements BaseDao<CropModel>{
                     crop_scientific_name: dataObj.crop_scientific_name,
                     season: dataObj.season,
                     crop_field_details: {
-                        // Update existing crop field details or create new ones
-                        deleteMany: {},  // Optional: Deletes existing crop field details, if needed
+                        deleteMany: {},
                         create: dataObj.field_code_list.map((field) => ({
-                            field_code: field,
+                            field : {connect : {field_code : field}}
                         })),
                     },
                 },
