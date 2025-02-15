@@ -15,10 +15,10 @@ class LogController{
             const file = req.file;
             const base64 = file.buffer.toString("base64")
             const data = req.body;
-            if (!data.field_code_list){
-                data.field_code_list = []
+            if (!data.fields_list){
+                data.fields_list = []
             }else {
-                data.field_code_list = data.field_code_list.split(',')
+                data.fields_list = data.fields_list.split(',')
             }
             if (!data.staffs_list){
                 data.staffs_list = []
@@ -36,12 +36,13 @@ class LogController{
                 data.log_details,
                 data.log_type,
                 base64,
-                data.field_code_list,
+                data.fields_list,
                 data.crops_list,
                 data.staffs_list
             );
             resp.status(201).send(await logService.saveLog(model))
         }catch (err){
+            console.log(err)
             resp.status(500).send(err);
         }
     }
@@ -54,10 +55,10 @@ class LogController{
             const file = req.file;
             const base64 = file.buffer.toString("base64")
             const data = req.body;
-            if (!data.field_code_list){
-                data.field_code_list = []
+            if (!data.fields_list){
+                data.fields_list = []
             }else {
-                data.field_code_list = data.field_code_list.split(',')
+                data.fields_list = data.fields_list.split(',')
             }
             if (!data.staffs_list){
                 data.staffs_list = []
@@ -75,7 +76,7 @@ class LogController{
                 data.log_details,
                 data.log_type,
                 base64,
-                data.field_code_list,
+                data.fields_list,
                 data.crops_list,
                 data.staffs_list
             );
