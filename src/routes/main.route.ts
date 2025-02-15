@@ -5,6 +5,8 @@ import FieldRouter from "./field.route";
 import LogRouter from "./log.route";
 import StaffRouter from "./staff.route";
 import VehicleRouter from "./vehicle.route";
+import AuthRoute from "./auth.route";
+import AuthRouter from "./auth.route";
 
 class MainRoute{
     router :Router
@@ -20,6 +22,7 @@ class MainRoute{
         this.router.use('/log',LogRouter.router)
         this.router.use('/staff',StaffRouter.router)
         this.router.use('/vehicle',VehicleRouter.router)
+        this.router.use('/auth',AuthRouter.router)
 
     }
 }
