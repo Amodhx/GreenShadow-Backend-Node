@@ -24,7 +24,34 @@ class AuthenticationService{
         })
     }
     async signUp(userObj:UserModel){
+        try {
+            const existingUser = await prisma.user.findUnique({
+                where: { user_id: userObj.user_id },
+            });
+            const isUserNameValid = await prisma.user.findUnique({
+                where : {
+                    email : userObj.email
+                }
+            })
+            if (existingUser || isUserNameValid){
+                if (existingUser){
+                    throw new Error("USER ID IS INVALID")
+                }else {
+                    throw new Error("USER NAME IS INVALID")
+                }
+            }
 
+            return await prisma.user.create({
+                data : {
+                    user_id : userObj.user_id,
+                    email : userObj.email,
+                    password : userObj.password,
+                    role : userObj.role
+                }
+            })
+        }catch (err){
+            throw err;
+        }
     }
     async refreshToken(token:any){
 
