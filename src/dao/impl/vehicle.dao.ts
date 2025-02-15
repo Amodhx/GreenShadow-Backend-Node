@@ -5,8 +5,25 @@ import {vehicle_fuel_type, vehicle_status} from "@prisma/client";
 
 class VehicleDao implements BaseDao<VehicleModel>{
     async create(dataObj: VehicleModel) {
-        try {
-            const savedVehicle = await prisma.vehicle.create({
+        const staff = await prisma.staff.findUnique({
+            where : {
+                staff_id : dataObj.staff_id
+            }
+        })
+        let savedVehicle ;
+        if (!staff){
+            savedVehicle = await prisma.vehicle.create({
+                data : {
+                    vehicle_code : dataObj.vehicle_id,
+                    vehicle_category : dataObj.vehicle_category as unknown as vehicle_status,
+                    status : dataObj.status as unknown as vehicle_status,
+                    fuel_type : dataObj.fuelType as unknown as vehicle_fuel_type,
+                    licence_plate_number : dataObj.licence_plate_number,
+                    remarks : dataObj.remarks,
+                }
+            })
+        }else {
+           savedVehicle = await prisma.vehicle.create({
                 data : {
                     vehicle_code : dataObj.vehicle_id,
                     vehicle_category : dataObj.vehicle_category as unknown as vehicle_status,
@@ -17,6 +34,9 @@ class VehicleDao implements BaseDao<VehicleModel>{
                     staff_id : dataObj.staff_id
                 }
             })
+        }
+        try {
+
             console.log("Saved Vehicle: "+savedVehicle)
             return savedVehicle;
         }catch (err){
@@ -57,7 +77,7 @@ class VehicleDao implements BaseDao<VehicleModel>{
                     fuel_type : dataObj.fuelType as unknown as vehicle_fuel_type,
                     licence_plate_number : dataObj.licence_plate_number,
                     remarks : dataObj.remarks,
-                    staff_id : dataObj.staff_id
+                    staff_id : dataObj.staff_id || null
                 }
             })
             console.log("updatedVehicle : "+ updatedVehicle)

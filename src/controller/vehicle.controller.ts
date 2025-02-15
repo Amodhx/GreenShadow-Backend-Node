@@ -6,6 +6,7 @@ class VehicleController{
         try {
             resp.status(201).send(await vehicleService.saveVehicle(req.body))
         }catch (err){
+            console.log(err)
             resp.status(500).send(err)
         }
     }
