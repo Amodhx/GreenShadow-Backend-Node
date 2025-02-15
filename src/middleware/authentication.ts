@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import prisma from "../../prisma/client";
 import {NextFunction, Request, Response} from "express";
-class Auth{
+class Authentication {
     async verifyToken(req:Request,resp:Response,next:NextFunction){
         const SECRET_KEY = process.env.JWT_SECRET_KEY || "default_secret";
         let token ;
@@ -34,5 +34,5 @@ class Auth{
         }
     }
 }
-const Auth_Check = new Auth();
-export default Auth_Check;
+const Authentication_Check = new Authentication();
+export default Authentication_Check;
