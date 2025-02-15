@@ -54,7 +54,13 @@ class AuthenticationService{
         }
     }
     async refreshToken(token:any){
-
+        let jwtSecretKey = process.env.JWT_SECRET_KEY;
+        const decoded = jwt.verify(token, jwtSecretKey) as { userId: string };
+        return jwt.sign(
+            {userId: decoded.userId},
+            jwtSecretKey,
+            {expiresIn: '15h'}
+        );
     }
 }
 const Authentication_service = new AuthenticationService();

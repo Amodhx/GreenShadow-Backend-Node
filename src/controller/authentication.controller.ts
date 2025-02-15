@@ -19,7 +19,19 @@ class AuthenticationController{
         }
     }
     async refreshToken(req:Request,resp:Response){
-
+        try {
+            let token ;
+            if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+                token = req.headers.authorization.split(' ')[1]
+            }
+            if (!token){
+                resp.status(401).json({message : "You are not logged in! Please log in to get access"})
+                return
+            }
+            resp.status(201).send(await Authentication_service.refreshToken(token))
+        }catch (err){
+            resp.status(500).send(err);
+        }
     }
 
 }
