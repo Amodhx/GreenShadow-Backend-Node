@@ -26,9 +26,10 @@ class Auth{
                 resp.status(401).json({message : "The user belonging to this email does not exist"})
                 return
             }
+            (req as any).user = currentUser;
             next()
         }catch (err){
-            resp.status(403).send("Token Is Expired")
+            resp.status(401).send("Token Is Expired")
             return
         }
     }
