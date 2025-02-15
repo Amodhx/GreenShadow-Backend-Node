@@ -153,7 +153,7 @@ model staff {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model user {
   user_id  String     @id @db.VarChar(255)
-  email    String?    @db.VarChar(255)
+  email    String?    @unique @db.VarChar(255)
   password String?    @db.VarChar(255)
   role     user_role?
 }
