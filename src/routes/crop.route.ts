@@ -15,10 +15,10 @@ class CropRoute{
         this.initialRoutes();
     }
     initialRoutes(){
-        this.router.post('/saveCrop',Authentication_Check.verifyToken,Authorization_check.checkRoles(['MANAGER']), upload.single("crop_image"), Crop_controller.saveCrop);
-        this.router.get('/getAllCrops',Crop_controller.getAllCrops)
-        this.router.patch('/updateCrop',upload.single("crop_image"),Crop_controller.updateCrop)
-        this.router.delete('/deleteCrop',Crop_controller.deleteCrop)
+        this.router.post('/saveCrop',Authentication_Check.verifyToken,Authorization_check.checkRoles(['MANAGER','SCIENTIST']), upload.single("crop_image"), Crop_controller.saveCrop);
+        this.router.get('/getAllCrops',Authentication_Check.verifyToken,Crop_controller.getAllCrops)
+        this.router.patch('/updateCrop',Authentication_Check.verifyToken,Authorization_check.checkRoles(['MANAGER','SCIENTIST']),upload.single("crop_image"),Crop_controller.updateCrop)
+        this.router.delete('/deleteCrop',Authentication_Check.verifyToken,Authorization_check.checkRoles(['MANAGER','SCIENTIST']),Crop_controller.deleteCrop)
     }
 }
 const CropRouter = new CropRoute();

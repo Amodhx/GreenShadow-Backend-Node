@@ -12,7 +12,7 @@ class AuthRoute{
     }
     initialRoutes(){
         this.router.post('/signIn',AuthenticationController.signIn)
-        this.router.post('/signUp',Authentication_Check.verifyToken,AuthenticationController.signUp)
+        this.router.post('/signUp',Authentication_Check.verifyToken,Authorization_check.checkRoles(['ADMINISTRATIVE','MANAGER']),AuthenticationController.signUp)
         this.router.post('/refresh',AuthenticationController.refreshToken)
     }
 }
