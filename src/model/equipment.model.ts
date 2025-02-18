@@ -4,8 +4,8 @@ class EquipmentModel{
     type:string
     count:string
     status:EquipmentStatus
-    staff_id_list:string[]
-    field_code_list:string[]
+    staff_list:string[]
+    field_list:string[]
 
 
     constructor(equipment_id: string, equipment_name: string, type: string, count: string, status: EquipmentStatus, staff_id_list: string[], field_code_list: string[]) {
@@ -14,8 +14,8 @@ class EquipmentModel{
         this.type = type;
         this.count = count;
         this.status = status;
-        this.staff_id_list = staff_id_list;
-        this.field_code_list = field_code_list;
+        this.staff_list = staff_id_list;
+        this.field_list = field_code_list;
     }
 }
 export default EquipmentModel;

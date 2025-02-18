@@ -14,12 +14,12 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
                     type : dataObj.type,
                     status :dataObj.status as unknown as equipment_status,
                     equipment_field_details : {
-                        create : dataObj.field_code_list.map((field)=>({
+                        create : dataObj.field_list.map((field:any)=>({
                             field : {connect : {field_code : field}}
                         }))
                     },
                     equipment_staff_details : {
-                        create : dataObj.staff_id_list.map((staff)=>({
+                        create : dataObj.staff_list.map((staff:any)=>({
                             staff : {connect : {staff_id : staff}}
                         }))
                     }
@@ -68,6 +68,8 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
 
     async update(dataObj: EquipmentModel) {
         try {
+            console.log("DATA:  : "+dataObj.staff_list)
+            console.log("DATA:  : "+dataObj.field_list)
             return await prisma.equipment.update({
                 where: {
                     equipment_id: dataObj.equipment_id
@@ -79,13 +81,13 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
                     status: dataObj.status as unknown as equipment_status,
                     equipment_field_details: {
                         deleteMany: {},
-                        create: dataObj.field_code_list.map((field) => ({
+                        create: dataObj.field_list.map((field) => ({
                             field : {connect : {field_code : field}}
                         }))
                     },
                     equipment_staff_details: {
                         deleteMany: {},
-                        create: dataObj.staff_id_list.map((staff) => ({
+                        create: dataObj.staff_list.map((staff) => ({
                             staff : {connect : {staff_id : staff}}
                         }))
                     }
