@@ -8,7 +8,7 @@ class LogDao implements BaseDao<LogModel>{
         try {
             const savedLog = await prisma.logs.create({
                 data:{
-                    log_code : dataObj.log_id,
+                    log_code : dataObj.log_code,
                     log_type : dataObj.logType as unknown as logs_log_type,
                     log_date : dataObj.log_date,
                     log_details : dataObj.log_details,
@@ -72,7 +72,7 @@ class LogDao implements BaseDao<LogModel>{
         try {
             const updatedLog = await prisma.logs.update({
                 where : {
-                    log_code : dataObj.log_id
+                    log_code : dataObj.log_code
                 },
                 data:{
                     log_type : dataObj.logType as unknown as logs_log_type,

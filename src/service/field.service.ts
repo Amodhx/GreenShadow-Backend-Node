@@ -4,7 +4,7 @@ import fieldDao from "../dao/impl/field.dao";
 class FieldService{
     async saveField(fieldObj:FieldModel){
         try {
-            fieldObj.field_id = "FIELD-2"
+            fieldObj.field_id = "FIELD-4"
             return await fieldDao.create(fieldObj);
         }catch (err){
             throw err;

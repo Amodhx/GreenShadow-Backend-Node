@@ -5,7 +5,7 @@ class LogService{
 
     async saveLog(logObj:LogModel){
         try {
-            logObj.log_id = "LOG-1"
+            logObj.log_code = "LOG-8"
             return await logDao.create(logObj);
         }catch (err){
             throw err;

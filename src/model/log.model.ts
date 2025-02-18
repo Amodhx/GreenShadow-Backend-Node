@@ -1,5 +1,5 @@
 class LogModel{
-     log_id:string
+     log_code:string
      log_date:string
      log_details:string
      logType:LogType
@@ -10,7 +10,7 @@ class LogModel{
 
 
      constructor(log_code: string, log_date: string, log_details: string, logType: LogType, observe_image: string, fields_list: string[], crops_list: string[], staffs_list: string[]) {
-          this.log_id = log_code;
+          this.log_code = log_code;
           this.log_date = log_date;
           this.log_details = log_details;
           this.logType = logType;

@@ -40,8 +40,10 @@ class LogController{
                 data.crops_list,
                 data.staffs_list
             );
+            console.log(model)
             resp.status(201).send(await logService.saveLog(model))
         }catch (err){
+            console.log("ERRR")
             console.log(err)
             resp.status(500).send(err);
         }
