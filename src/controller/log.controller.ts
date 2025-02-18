@@ -40,7 +40,6 @@ class LogController{
                 data.crops_list,
                 data.staffs_list
             );
-            console.log(model)
             resp.status(201).send(await logService.saveLog(model))
         }catch (err){
             console.log("ERRR")
@@ -73,7 +72,7 @@ class LogController{
                 data.crops_list = data.crops_list.split(',')
             }
             const model = new LogModel(
-                data.log_id,
+                data.log_code,
                 data.log_date,
                 data.log_details,
                 data.log_type,
@@ -84,6 +83,7 @@ class LogController{
             );
             resp.status(201).send(await logService.updateLog(model))
         }catch (err){
+            console.log(err)
             resp.status(500).send(err);
         }
     }
