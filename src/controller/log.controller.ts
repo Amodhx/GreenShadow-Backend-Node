@@ -4,6 +4,7 @@ import {unwatchFile} from "node:fs";
 import LogModel from "../model/log.model";
 import logService from "../service/log.service";
 import equipmentService from "../service/equipment.service";
+import {logs_log_type} from "@prisma/client";
 
 class LogController{
     async saveLog(req:Request,resp:Response):Promise<void>{
@@ -34,7 +35,7 @@ class LogController{
                 data.log_id,
                 data.log_date,
                 data.log_details,
-                data.log_type,
+                data.log_type as logs_log_type,
                 base64,
                 data.fields_list,
                 data.crops_list,
@@ -75,7 +76,7 @@ class LogController{
                 data.log_code,
                 data.log_date,
                 data.log_details,
-                data.log_type,
+                data.log_type as logs_log_type,
                 base64,
                 data.fields_list,
                 data.crops_list,

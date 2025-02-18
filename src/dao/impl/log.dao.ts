@@ -1,7 +1,8 @@
 import {BaseDao} from "../base.dao";
-import LogModel from "../../model/log.model";
+import LogModel, {LogType} from "../../model/log.model";
 import prisma from "../../../prisma/client";
 import {logs_log_type} from "@prisma/client";
+import {log} from "node:util";
 
 class LogDao implements BaseDao<LogModel>{
     async create(dataObj: LogModel) {
@@ -9,22 +10,22 @@ class LogDao implements BaseDao<LogModel>{
             const savedLog = await prisma.logs.create({
                 data:{
                     log_code : dataObj.log_code,
-                    log_type : dataObj.logType as unknown as logs_log_type,
+                    log_type : dataObj.log_type as unknown as logs_log_type,
                     log_date : dataObj.log_date,
                     log_details : dataObj.log_details,
                     observe_image : dataObj.observe_image,
                     log_crop_details : {
-                        create : dataObj.crops_list.map((crop)=>({
+                        create : dataObj.log_crop_details.map((crop)=>({
                             crop : {connect : {crop_code : crop}}
                         }))
                     },
                     log_staff_details : {
-                        create : dataObj.staffs_list.map((staff)=>({
+                        create : dataObj.log_staff_details.map((staff)=>({
                             staff : {connect : {staff_id : staff}}
                         }))
                     },
                     log_fiedls_details : {
-                        create : dataObj.fields_list.map((field) => ({
+                        create : dataObj.log_fiedls_details.map((field) => ({
                             field : {connect : {field_code : field}}
                         }))
                     }
@@ -56,13 +57,23 @@ class LogDao implements BaseDao<LogModel>{
 
     async findAll() {
         try {
-            return await prisma.logs.findMany({
-                include : {
-                    log_fiedls_details : true,
-                    log_staff_details : true,
-                    log_crop_details : true
+            const logs = await prisma.logs.findMany({
+                include: {
+                    log_fiedls_details: true,
+                    log_crop_details: true,
+                    log_staff_details: true
                 }
-            })
+            });
+            return logs.map(log => new LogModel(
+                log.log_code,
+                log.log_date || "",
+                log.log_details || "",
+                log.log_type as logs_log_type,
+            log.observe_image || "",
+                log.log_fiedls_details?.map((field:any) => field.field_code),
+                log.log_crop_details?.map((crop:any) => crop.crop_code),
+                log.log_staff_details?.map((staff:any) => staff.staff_id)
+            ));
         }catch (err){
             throw err;
         }
@@ -75,25 +86,25 @@ class LogDao implements BaseDao<LogModel>{
                     log_code : dataObj.log_code
                 },
                 data:{
-                    log_type : dataObj.logType as unknown as logs_log_type,
+                    log_type : dataObj.log_type as logs_log_type,
                     log_date : dataObj.log_date,
                     log_details : dataObj.log_details,
                     observe_image : dataObj.observe_image,
                     log_crop_details : {
                         deleteMany : {},
-                        create : dataObj.crops_list.map((crop)=>({
+                        create : dataObj.log_crop_details.map((crop)=>({
                             crop : {connect : {crop_code : crop}}
                         }))
                     },
                     log_staff_details : {
                         deleteMany : {},
-                        create : dataObj.staffs_list.map((staff)=>({
+                        create : dataObj.log_staff_details.map((staff)=>({
                             staff : {connect : {staff_id : staff}}
                         }))
                     },
                     log_fiedls_details : {
                         deleteMany : {},
-                        create : dataObj.fields_list.map((field) => ({
+                        create : dataObj.log_fiedls_details.map((field) => ({
                             field : {connect : {field_code : field}}
                         }))
                     }
@@ -104,7 +115,6 @@ class LogDao implements BaseDao<LogModel>{
                     log_crop_details : true
                 }
             })
-            console.log("Updated Log :  "+ updatedLog)
             return updatedLog;
         }catch (err){
             throw err;
