@@ -116,6 +116,30 @@ class StaffDao implements BaseDao<StaffModel>{
             throw err
         }
     }
+    async generateNextStaffId(){
+        try {
+            const staffs = await prisma.staff.findMany({
+                select : {
+                    staff_id : true
+                }
+            });
+            const sortedStaffs = staffs
+                .map((staff) =>{
+                    const numberPart = parseInt(staff.staff_id.split('-')[1]);
+                    return { staff_id: staff.staff_id, numberPart };
+                })
+                .sort((a,b) => b.numberPart - a.numberPart);
+            if (sortedStaffs.length === 0){
+                return "STAFF-1"
+            }
+            const lastIdNumber = sortedStaffs[0].numberPart;
+            const nextIdNumber = lastIdNumber + 1;
+            return `STAFF-${nextIdNumber}`;
+
+        }catch (err){
+            throw err;
+        }
+    }
 
 }
 
