@@ -106,6 +106,30 @@ class VehicleDao implements BaseDao<VehicleModel> {
             throw err;
         }
     }
+    async generateNextVehicleId(){
+        try {
+            const vehicles = await prisma.vehicle.findMany({
+                select : {
+                    vehicle_code : true
+                }
+            });
+            const sortedVehicles = vehicles
+                .map((vehicle) =>{
+                    const numberPart = parseInt(vehicle.vehicle_code.split('-')[1]);
+                    return { vehicle_code: vehicle.vehicle_code, numberPart };
+                })
+                .sort((a,b) => b.numberPart - a.numberPart);
+            if (sortedVehicles.length === 0){
+                return "VEHICLE-1"
+            }
+            const lastIdNumber = sortedVehicles[0].numberPart;
+            const nextIdNumber = lastIdNumber + 1;
+            return `VEHICLE-${nextIdNumber}`;
+
+        }catch (err){
+            throw err;
+        }
+    }
 
 }
 
