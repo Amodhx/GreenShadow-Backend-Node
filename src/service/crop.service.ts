@@ -1,5 +1,6 @@
 import CropModel from "../model/crop.model";
 import cropDao from "../dao/impl/crop.dao";
+import {CropDto} from "../dto/crop.dto";
 
 class CropService{
 
@@ -27,7 +28,27 @@ class CropService{
     }
     async getAllCrops(){
         try {
-            return await cropDao.findAll();
+            const crops:CropDto[] = await cropDao.findAll();
+            let cropsToReturn:CropModel[] = [];
+            crops.map((crop:CropDto) =>{
+                let fieldIds = crop.crop_field_details.map((field)=> field.field_code);
+
+                cropsToReturn.push(
+                    new CropModel(
+                        crop.crop_code,
+                        crop.crop_common_name || '',
+                        crop.crop_scientific_name || '',
+                        crop.crop_image,
+                        crop.category,
+                        crop.season,
+                        fieldIds,
+                        []
+                    )
+                )
+            })
+
+            return cropsToReturn;
+
         }catch (err){
             throw err;
         }
