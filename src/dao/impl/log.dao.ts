@@ -2,7 +2,7 @@ import {BaseDao} from "../base.dao";
 import LogModel, {LogType} from "../../model/log.model";
 import prisma from "../../../prisma/client";
 import {logs_log_type} from "@prisma/client";
-import {log} from "node:util";
+import {LogDTO} from "../../dto/log.dto";
 
 class LogDao implements BaseDao<LogModel>{
     async create(dataObj: LogModel) {
@@ -59,21 +59,14 @@ class LogDao implements BaseDao<LogModel>{
         try {
             const logs = await prisma.logs.findMany({
                 include: {
-                    log_fiedls_details: true,
                     log_crop_details: true,
-                    log_staff_details: true
-                }
+                    log_fiedls_details: true,
+                    log_staff_details: true,
+                },
             });
-            return logs.map(log => new LogModel(
-                log.log_code,
-                log.log_date || "",
-                log.log_details || "",
-                log.log_type as logs_log_type,
-            log.observe_image || "",
-                log.log_fiedls_details?.map((field:any) => field.field_code),
-                log.log_crop_details?.map((crop:any) => crop.crop_code),
-                log.log_staff_details?.map((staff:any) => staff.staff_id)
-            ));
+
+            return logs.map((log) => new LogDTO(log));
+
         }catch (err){
             throw err;
         }
