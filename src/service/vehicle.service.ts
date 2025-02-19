@@ -1,10 +1,11 @@
 import VehicleModel from "../model/vehicle.model";
 import Vehicle_dao from "../dao/impl/vehicle.dao";
+import vehicleDao from "../dao/impl/vehicle.dao";
 
 class VehicleService{
     async saveVehicle(vehicleObj:VehicleModel){
         try {
-            vehicleObj.vehicle_code = "VEHICLE-1"
+            vehicleObj.vehicle_code = await vehicleDao.generateNextVehicleId();
             return await Vehicle_dao.create(vehicleObj);
         }catch (err){
             throw err

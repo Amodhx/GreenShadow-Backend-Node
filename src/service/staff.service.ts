@@ -4,7 +4,7 @@ import staffDao from "../dao/impl/staff.dao";
 class StaffService{
     async saveStaff(staffObj:StaffModel){
         try {
-            staffObj.staff_id = "STAFF-1"
+            staffObj.staff_id = await staffDao.generateNextStaffId();
             return await staffDao.create(staffObj);
         }catch (err){
             throw err;
