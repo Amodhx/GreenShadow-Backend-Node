@@ -120,6 +120,29 @@ class LogDao implements BaseDao<LogModel>{
             throw err;
         }
     }
+    async generateNextLogId(){
+        try {
+            const logs = await prisma.logs.findMany({
+                select : {
+                    log_code : true
+                }
+            })
+            const sortedLogs = logs
+                .map((log)=>{
+                    const numberPart = parseInt(log.log_code.split('-')[1]);
+                    return {log_code : log.log_code,numberPart};
+                })
+                .sort((a,b)=> b.numberPart- a.numberPart);
+            if (sortedLogs.length === 0 ){
+                return "LOG-1";
+            }
+            const lastIdNumber = sortedLogs[0].numberPart;
+            const nextIdNumber = lastIdNumber + 1;
+            return `LOG-${nextIdNumber}`;
+        }catch (err){
+            throw err;
+        }
+    }
 
 }
 const Log_dao = new LogDao();

@@ -14,10 +14,10 @@ class StaffModel{
     contact_number:string
     email:string
     role:Role
-    fields_list:string[]
+    field_staff_details:string[]
     logs_list:string[]
-    equipments_list:string[]
-    vehicles_list:string[]
+    equipment_staff_details:string[]
+    vehicle:string[]
 
 
     constructor(staff_id: string, first_name: string, last_name: string, designation: Designation, gender: Gender, joined_date: string, dob: string, address_line_01: string, address_line_02: string, address_line_03: string, address_line_04: string, address_line_05: string, contact_number: string, email: string, role: Role, fields_list: string[], logs_list: string[], equipments_list: string[], vehicles_list: string[]) {
@@ -36,10 +36,10 @@ class StaffModel{
         this.contact_number = contact_number;
         this.email = email;
         this.role = role;
-        this.fields_list = fields_list;
+        this.field_staff_details = fields_list;
         this.logs_list = logs_list;
-        this.equipments_list = equipments_list;
-        this.vehicles_list = vehicles_list;
+        this.equipment_staff_details = equipments_list;
+        this.vehicle = vehicles_list;
     }
 }
 export enum Designation {

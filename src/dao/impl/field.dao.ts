@@ -97,6 +97,29 @@ class FieldDao implements BaseDao<FieldModel>{
             throw err;
         }
     }
+    async generateNextFieldId(){
+        try {
+            const fields = await prisma.field.findMany({
+                select : {
+                    field_code : true
+                }
+            });
+            const sortedFields = fields
+                .map((field)=>{
+                    const numberPart = parseInt(field.field_code.split('-')[1]);
+                    return {field_code : field.field_code,numberPart}
+                })
+                .sort((a,b) => b.numberPart-a.numberPart);
+            if (sortedFields.length === 0){
+                return "FIELD-1"
+            }
+            const lastIdNumber = sortedFields[0].numberPart;
+            const nextIdNumber = lastIdNumber + 1;
+            return `FIELD-${nextIdNumber}`;
+        }catch (err){
+            throw err;
+        }
+    }
 
 }
 const Field_dao = new FieldDao();

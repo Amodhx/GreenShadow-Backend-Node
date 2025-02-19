@@ -23,6 +23,7 @@ class StaffController{
         try {
             resp.status(201).send(await staffService.updateStaff(req.body))
         }catch (err){
+            console.log(err);
             resp.status(500).send(err);
         }
     }

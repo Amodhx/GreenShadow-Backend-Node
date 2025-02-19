@@ -24,12 +24,12 @@ class StaffDao implements BaseDao<StaffModel>{
                    email : dataObj.email,
                    role : dataObj.role as unknown as staff_role,
                    equipment_staff_details : {
-                       create : dataObj.equipments_list.map((equipment) =>({
+                       create : dataObj.equipment_staff_details.map((equipment) =>({
                            equipment : {connect : {equipment_id : equipment}}
                        }))
                    },
                    field_staff_details : {
-                       create : dataObj.fields_list.map((field) =>({
+                       create : dataObj.field_staff_details.map((field) =>({
                            field : {connect : {field_code : field}}
                        }))
                    }
@@ -94,13 +94,13 @@ class StaffDao implements BaseDao<StaffModel>{
                     role : dataObj.role as unknown as staff_role,
                     equipment_staff_details : {
                         deleteMany : {},
-                        create : dataObj.equipments_list.map((equipment) =>({
+                        create : dataObj.equipment_staff_details.map((equipment) =>({
                             equipment : {connect : {equipment_id : equipment}}
                         }))
                     },
                     field_staff_details : {
                         deleteMany : {},
-                        create : dataObj.fields_list.map((field) =>({
+                        create : dataObj.field_staff_details.map((field) =>({
                             field : {connect : {field_code : field}}
                         }))
                     }

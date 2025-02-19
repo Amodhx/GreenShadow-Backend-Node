@@ -15,7 +15,7 @@ class VehicleDao implements BaseDao<VehicleModel> {
             if (!staff) {
                 savedVehicle = await prisma.vehicle.create({
                     data: {
-                        vehicle_code: dataObj.vehicle_id,
+                        vehicle_code: dataObj.vehicle_code,
                         vehicle_category: dataObj.vehicle_category as unknown as vehicle_status,
                         status: dataObj.status as unknown as vehicle_status,
                         fuel_type: dataObj.fuelType as unknown as vehicle_fuel_type,
@@ -26,7 +26,7 @@ class VehicleDao implements BaseDao<VehicleModel> {
             } else {
                 savedVehicle = await prisma.vehicle.create({
                     data: {
-                        vehicle_code: dataObj.vehicle_id,
+                        vehicle_code: dataObj.vehicle_code,
                         vehicle_category: dataObj.vehicle_category as unknown as vehicle_status,
                         status: dataObj.status as unknown as vehicle_status,
                         fuel_type: dataObj.fuelType as unknown as vehicle_fuel_type,
@@ -75,7 +75,7 @@ class VehicleDao implements BaseDao<VehicleModel> {
             if (!staff) {
                 updatedVehicle = await prisma.vehicle.update({
                     where: {
-                        vehicle_code: dataObj.vehicle_id
+                        vehicle_code: dataObj.vehicle_code
                     },
                     data: {
                         vehicle_category: dataObj.vehicle_category as unknown as vehicle_status,
@@ -88,7 +88,7 @@ class VehicleDao implements BaseDao<VehicleModel> {
             } else {
                 updatedVehicle = await prisma.vehicle.update({
                     where: {
-                        vehicle_code: dataObj.vehicle_id
+                        vehicle_code: dataObj.vehicle_code
                     },
                     data: {
                         vehicle_category: dataObj.vehicle_category as unknown as vehicle_status,
