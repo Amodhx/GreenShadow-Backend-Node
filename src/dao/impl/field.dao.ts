@@ -8,18 +8,18 @@ class FieldDao implements BaseDao<FieldModel>{
         try{
             const savedField = await prisma.field.create({
                 data:{
-                    field_code : dataObj.field_id,
+                    field_code : dataObj.field_code,
                     field_name : dataObj.field_name,
                     field_location : dataObj.field_location,
                     extent_size : dataObj.extent_size,
                     field_image : dataObj.field_image,
                     field_staff_details : {
-                        create : dataObj.staff_list.map((staff)=>({
+                        create : dataObj.field_staff_details.map((staff)=>({
                             staff : {connect : {staff_id : staff}}
                         }))
                     },
                     equipment_field_details : {
-                        create : dataObj.equipments_list.map((equipment)=>({
+                        create : dataObj.equipment_field_details.map((equipment)=>({
                             equipment : {connect : {equipment_id : equipment}}
                         }))
                     }
@@ -68,7 +68,7 @@ class FieldDao implements BaseDao<FieldModel>{
         try{
             const savedField = await prisma.field.update({
                 where : {
-                    field_code : dataObj.field_id
+                    field_code : dataObj.field_code
                 },
                 data:{
                     field_name : dataObj.field_name,
@@ -77,13 +77,13 @@ class FieldDao implements BaseDao<FieldModel>{
                     field_image : dataObj.field_image,
                     field_staff_details : {
                         deleteMany : {},
-                        create : dataObj.staff_list.map((staff)=>({
+                        create : dataObj.field_staff_details.map((staff)=>({
                             staff : {connect : {staff_id : staff}}
                         }))
                     },
                     equipment_field_details : {
                         deleteMany : {},
-                        create : dataObj.equipments_list.map((equipment)=>({
+                        create : dataObj.equipment_field_details.map((equipment)=>({
                             equipment : {connect : {equipment_id : equipment}}
                         }))
                     }

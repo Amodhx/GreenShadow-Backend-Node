@@ -1,7 +1,6 @@
 import EquipmentModel from "../model/equipment.model";
 import equipmentDao from "../dao/impl/equipment.dao";
 import {EquipmentDto} from "../dto/equipment.dto";
-import fieldModel from "../model/field.model";
 import {equipment_status} from "@prisma/client";
 
 class EquipmentService{

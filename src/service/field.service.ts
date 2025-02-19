@@ -5,7 +5,7 @@ import {FieldDto} from "../dto/field.dto";
 class FieldService{
     async saveField(fieldObj:FieldModel){
         try {
-            fieldObj.field_id = await fieldDao.generateNextFieldId();
+            fieldObj.field_code = await fieldDao.generateNextFieldId();
             return await fieldDao.create(fieldObj);
         }catch (err){
             throw err;

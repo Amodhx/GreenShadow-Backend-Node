@@ -6,7 +6,7 @@ class CropService{
 
     async saveCrop(cropObj:CropModel){
         try {
-            cropObj.crop_id = await cropDao.generateNextCropId();
+            cropObj.crop_code = await cropDao.generateNextCropId();
             return await cropDao.create(cropObj);
         }catch (err){
             throw err;

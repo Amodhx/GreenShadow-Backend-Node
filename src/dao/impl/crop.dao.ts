@@ -9,14 +9,14 @@ class CropDao implements BaseDao<CropModel>{
         try {
             const newCrop = await prisma.crop.create({
                 data: {
-                    crop_code: dataObj.crop_id,
+                    crop_code: dataObj.crop_code,
                     category: dataObj.category,
                     crop_common_name: dataObj.crop_common_name,
                     crop_image: dataObj.crop_image,
                     crop_scientific_name: dataObj.crop_scientific_name,
                     season: dataObj.season,
                     crop_field_details: {
-                        create: dataObj.field_code_list.map((field) => ({
+                        create: dataObj.crop_field_details.map((field) => ({
                             field: { connect: { field_code: field } },
                         })),
                     },
@@ -64,7 +64,7 @@ class CropDao implements BaseDao<CropModel>{
         try {
             const updatedCrop = await prisma.crop.update({
                 where: {
-                    crop_code: dataObj.crop_id,
+                    crop_code: dataObj.crop_code,
                 },
                 data: {
                     category: dataObj.category,
@@ -74,7 +74,7 @@ class CropDao implements BaseDao<CropModel>{
                     season: dataObj.season,
                     crop_field_details: {
                         deleteMany: {},
-                        create: dataObj.field_code_list.map((field) => ({
+                        create: dataObj.crop_field_details.map((field) => ({
                             field : {connect : {field_code : field}}
                         })),
                     },

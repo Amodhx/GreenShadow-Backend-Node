@@ -17,7 +17,7 @@ class StaffModel{
     email:string
     role:staff_role
     field_staff_details:string[]
-    logs_list:string[]
+    log_staff_details:string[]
     equipment_staff_details:string[]
     vehicle:string[]
 
@@ -39,7 +39,7 @@ class StaffModel{
         this.email = email;
         this.role = role;
         this.field_staff_details = fields_list;
-        this.logs_list = logs_list;
+        this.log_staff_details = logs_list;
         this.equipment_staff_details = equipments_list;
         this.vehicle = vehicles_list;
     }

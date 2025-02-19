@@ -15,12 +15,12 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
                     type : dataObj.type,
                     status :dataObj.status as unknown as equipment_status,
                     equipment_field_details : {
-                        create : dataObj.field_list.map((field:any)=>({
+                        create : dataObj.equipment_field_details.map((field:any)=>({
                             field : {connect : {field_code : field}}
                         }))
                     },
                     equipment_staff_details : {
-                        create : dataObj.staff_list.map((staff:any)=>({
+                        create : dataObj.equipment_staff_details.map((staff:any)=>({
                             staff : {connect : {staff_id : staff}}
                         }))
                     }
@@ -70,8 +70,8 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
 
     async update(dataObj: EquipmentModel) {
         try {
-            console.log("DATA:  : "+dataObj.staff_list)
-            console.log("DATA:  : "+dataObj.field_list)
+            console.log("DATA:  : "+dataObj.equipment_staff_details)
+            console.log("DATA:  : "+dataObj.equipment_field_details)
             return await prisma.equipment.update({
                 where: {
                     equipment_id: dataObj.equipment_id
@@ -83,13 +83,13 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
                     status: dataObj.status as unknown as equipment_status,
                     equipment_field_details: {
                         deleteMany: {},
-                        create: dataObj.field_list.map((field) => ({
+                        create: dataObj.equipment_field_details.map((field) => ({
                             field : {connect : {field_code : field}}
                         }))
                     },
                     equipment_staff_details: {
                         deleteMany: {},
-                        create: dataObj.staff_list.map((staff) => ({
+                        create: dataObj.equipment_staff_details.map((staff) => ({
                             staff : {connect : {staff_id : staff}}
                         }))
                     }
