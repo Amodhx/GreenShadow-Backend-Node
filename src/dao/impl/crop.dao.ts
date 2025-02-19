@@ -1,6 +1,7 @@
 import {BaseDao} from "../base.dao";
 import CropModel from "../../model/crop.model";
 import prisma from "../../../prisma/client";
+import {CropDto} from "../../dto/crop.dto";
 
 
 class CropDao implements BaseDao<CropModel>{
@@ -48,12 +49,13 @@ class CropDao implements BaseDao<CropModel>{
 
     async findAll() {
         try {
-            return await prisma.crop.findMany({
+            const crops = await prisma.crop.findMany({
                 include : {
                     crop_field_details : true,
                     log_crop_details : true
                 }
-            });
+            })
+            return crops.map((crop)=> new CropDto(crop));
         } catch (error) {
             throw error;
         }

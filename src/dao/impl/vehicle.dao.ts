@@ -2,6 +2,7 @@ import {BaseDao} from "../base.dao";
 import VehicleModel from "../../model/vehicle.model";
 import prisma from "../../../prisma/client";
 import {vehicle_fuel_type, vehicle_status} from "@prisma/client";
+import {VehicleDto} from "../../dto/vehicle.dto";
 
 class VehicleDao implements BaseDao<VehicleModel> {
     async create(dataObj: VehicleModel) {
@@ -58,7 +59,8 @@ class VehicleDao implements BaseDao<VehicleModel> {
 
     async findAll() {
         try {
-            return await prisma.vehicle.findMany();
+            const vehicles = await prisma.vehicle.findMany();
+            return vehicles.map((vehicle) => new VehicleDto(vehicle));
         } catch (err) {
             throw err;
         }

@@ -1,6 +1,7 @@
 import {BaseDao} from "../base.dao";
 import FieldModel from "../../model/field.model";
 import prisma from "../../../prisma/client";
+import {FieldDto} from "../../dto/field.dto";
 
 class FieldDao implements BaseDao<FieldModel>{
     async create(dataObj: FieldModel) {
@@ -49,7 +50,7 @@ class FieldDao implements BaseDao<FieldModel>{
 
     async findAll() {
         try {
-            return await prisma.field.findMany({
+            const fields = await prisma.field.findMany({
                 include : {
                     crop_field_details : true,
                     equipment_field_details : true,
@@ -57,6 +58,7 @@ class FieldDao implements BaseDao<FieldModel>{
                     log_fiedls_details : true
                 }
             });
+            return fields.map((field)=>new FieldDto(field));
         }catch (err){
             throw err;
         }

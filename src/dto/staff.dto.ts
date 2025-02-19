@@ -37,10 +37,12 @@ export class StaffDto {
         this.joined_date = staff.joined_date;
         this.last_name = staff.last_name;
         this.role = staff.role;
-        this.equipment_staff_details = staff.equipment_staff_details.map((equipment: any) => new EquipmentStaffDetailsDTO(equipment));
-        this.field_staff_details = staff.field_staff_details.map((field: any) => new FieldStaffDetailsDTO(field));
-        this.log_staff_details = staff.log_staff_details.map((log: any) => new LogStaffDetailsDTO(log));
-        this.vehicle = staff.vehicle.map((vehicle: any) => new VehicleDto(vehicle));
+
+        // Ensure these fields are defined as empty arrays if they are undefined
+        this.equipment_staff_details = (staff.equipment_staff_details || []).map((equipment: any) => new EquipmentStaffDetailsDTO(equipment));
+        this.field_staff_details = (staff.field_staff_details || []).map((field: any) => new FieldStaffDetailsDTO(field));
+        this.log_staff_details = (staff.log_staff_details || []).map((log: any) => new LogStaffDetailsDTO(log));
+        this.vehicle = (staff.vehicle || []).map((vehicle: any) => new VehicleDto(vehicle));
     }
 }
 

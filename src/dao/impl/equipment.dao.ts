@@ -2,6 +2,7 @@ import {BaseDao} from "../base.dao";
 import EquipmentModel from "../../model/equipment.model";
 import prisma from "../../../prisma/client";
 import {equipment_status} from "@prisma/client";
+import {EquipmentDto} from "../../dto/equipment.dto";
 
 class EquipmentDao implements BaseDao<EquipmentModel>{
     async create(dataObj: EquipmentModel) {
@@ -55,12 +56,13 @@ class EquipmentDao implements BaseDao<EquipmentModel>{
 
     async findAll() {
         try {
-            return await prisma.equipment.findMany({
+            const equipments = await prisma.equipment.findMany({
                 include : {
                     equipment_field_details : true,
                     equipment_staff_details : true
                 }
             });
+            return equipments.map((equipment) => new EquipmentDto(equipment));
         }catch (err){
             throw err;
         }

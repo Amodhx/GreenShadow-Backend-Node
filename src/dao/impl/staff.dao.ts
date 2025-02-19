@@ -2,6 +2,7 @@ import StaffModel, {Designation} from "../../model/staff.model";
 import {BaseDao} from "../base.dao";
 import prisma from "../../../prisma/client";
 import {staff_designation, staff_gender, staff_role} from "@prisma/client";
+import {StaffDto} from "../../dto/staff.dto";
 
 class StaffDao implements BaseDao<StaffModel>{
     async create(dataObj: StaffModel) {
@@ -60,12 +61,13 @@ class StaffDao implements BaseDao<StaffModel>{
 
     async findAll() {
         try {
-            return await prisma.staff.findMany({
+            const staffs = await prisma.staff.findMany({
                 include : {
                     equipment_staff_details : true,
                     field_staff_details : true
                 }
             })
+            return staffs.map((staff)=>new StaffDto(staff));
         }catch (err){
             throw err;
         }

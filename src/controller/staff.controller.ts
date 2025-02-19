@@ -31,6 +31,7 @@ class StaffController{
         try {
             resp.status(201).send(await staffService.getAllStaffs())
         }catch (err){
+            console.log(err);
             resp.status(500).send(err);
         }
     }
