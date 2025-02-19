@@ -1,5 +1,6 @@
 import FieldModel from "../model/field.model";
 import fieldDao from "../dao/impl/field.dao";
+import {FieldDto} from "../dto/field.dto";
 
 class FieldService{
     async saveField(fieldObj:FieldModel){
@@ -27,7 +28,28 @@ class FieldService{
     }
     async getAllFields(){
         try {
-            return await fieldDao.findAll();
+            const fields:FieldDto[] = await fieldDao.findAll();
+            let fieldsToReturn:FieldModel[] = [];
+            fields.map((field : FieldDto)=>{
+                let staffIds = field.field_staff_details.map((fieldStaff) => fieldStaff.staff_id)
+                let cropIds = field.crop_field_details.map((fieldCrop) => fieldCrop.crop_code);
+                let logIds = field.log_fiedls_details.map((logField) => logField.log_code);
+                let equipmentIds = field.equipment_field_details.map((equipmentField)=>equipmentField.equipment_id);
+
+                fieldsToReturn.push(new FieldModel(
+                    field.field_code,
+                    field.field_name || '',
+                    field.field_location || '',
+                    field.extent_size || '',
+                    staffIds,
+                    cropIds,
+                    field.field_image,
+                    logIds,
+                    equipmentIds
+                ))
+            })
+
+            return fieldsToReturn;
         }catch (err){
             throw err
         }
