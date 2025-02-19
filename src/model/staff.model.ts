@@ -1,9 +1,11 @@
+import {staff_designation, staff_gender, staff_role} from "@prisma/client";
+
 class StaffModel{
     staff_id:string
     first_name:string
     last_name:string
-    designation:Designation
-    gender:Gender
+    designation:staff_designation
+    gender:staff_gender
     joined_date:string
     dob:string
     address_line_01:string
@@ -13,14 +15,14 @@ class StaffModel{
     address_line_05:string
     contact_number:string
     email:string
-    role:Role
+    role:staff_role
     field_staff_details:string[]
     logs_list:string[]
     equipment_staff_details:string[]
     vehicle:string[]
 
 
-    constructor(staff_id: string, first_name: string, last_name: string, designation: Designation, gender: Gender, joined_date: string, dob: string, address_line_01: string, address_line_02: string, address_line_03: string, address_line_04: string, address_line_05: string, contact_number: string, email: string, role: Role, fields_list: string[], logs_list: string[], equipments_list: string[], vehicles_list: string[]) {
+    constructor(staff_id: string, first_name: string, last_name: string, designation: staff_designation, gender: staff_gender, joined_date: string, dob: string, address_line_01: string, address_line_02: string, address_line_03: string, address_line_04: string, address_line_05: string, contact_number: string, email: string, role: staff_role, fields_list: string[], logs_list: string[], equipments_list: string[], vehicles_list: string[]) {
         this.staff_id = staff_id;
         this.first_name = first_name;
         this.last_name = last_name;
